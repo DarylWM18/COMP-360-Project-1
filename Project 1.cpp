@@ -198,7 +198,9 @@ int main() {
     vector<Token> tokens = lexer.getTokens();
 
     for(Token token : tokens){
-        cout << token.lexeme << endl;
+        if(token.type != TokenType::END_OF_FILE){
+            cout << token.lexeme << "\t" << getTokenName(token.type) << endl;
+        }
     }
 
     return 0;
