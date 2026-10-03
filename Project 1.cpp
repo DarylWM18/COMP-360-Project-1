@@ -201,6 +201,7 @@ int main() {
         if(token.type != TokenType::END_OF_FILE){
             cout << token.lexeme << "\t" << getTokenName(token.type) << endl;
         }
+
     }
 
     return 0;
