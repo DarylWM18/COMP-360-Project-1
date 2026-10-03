@@ -174,7 +174,25 @@ class Parser {
 };
 
 int main() {
-    string program = "float prog (float k){ float 1; float a; float test; test = k / 1 * a; }";
+    string filename;
+    
+    cout << "Enter the file name: ";
+    cin >> filename;
+    ifstream file(filename);
+
+    if (!file){
+        cout << "Could not open file" << endl;
+        return 1;
+    }
+
+    string program = "";
+    string line;
+
+    while(getline(file, line)){
+        program += line + "\n";
+    }
+
+    file.close();
     
     Lexer lexer(program);
     vector<Token> tokens = lexer.getTokens();
