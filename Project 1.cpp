@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <cctype>
 #include <string>
 #include <vector>
@@ -140,17 +141,67 @@ public:
 
 };
 
+string getTokenName(TokenType type){
+    switch (type){
+    case TokenType::KEYWORD_FLOAT:
+        return "KEYWORD_FLOAT";
+    case TokenType::IDENT:
+        return "IDENT";
+    case TokenType::LPAREN:
+        return "LPAREN";
+    case TokenType::RPAREN:
+        return "RPAREN";
+    case TokenType::LBRACE:
+        return "LBRACE";
+    case TokenType::RBRACE:
+        return "RBRACE";
+    case TokenType::SEMICOLON:
+        return "SEMICOLON";
+    case TokenType::ASSIGN_OP:
+        return "ASSIGN_OP";
+    case TokenType::MUL_OP:
+        return "MUL_OP";
+    case TokenType::DIV_OP:
+        return "DIV_OP";
+    case TokenType::END_OF_FILE:
+        return "END_OF_FILE";
+    default:
+        return "UNKNOWN";
+    }
+}
+
 class Parser {
 };
 
 int main() {
-    string program = "float prog (float k){ float 1; float a; float test; test = k / 1 * a; }";
+    string filename;
+    
+    cout << "Enter the file name: ";
+    cin >> filename;
+    ifstream file(filename);
+
+    if (!file){
+        cout << "Could not open file" << endl;
+        return 1;
+    }
+
+    string program = "";
+    string line;
+
+    while(getline(file, line)){
+        program += line + "\n";
+    }
+
+    file.close();
     
     Lexer lexer(program);
     vector<Token> tokens = lexer.getTokens();
 
     for(Token token : tokens){
-        cout << token.lexeme << endl;
+        if(token.type != TokenType::END_OF_FILE){
+            cout << token.lexeme << "\t" << getTokenName(token.type) << endl;
+        }
+
     }
 
     return 0;
